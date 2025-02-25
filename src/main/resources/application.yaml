@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: webshop
+server:
+  port: 8888
