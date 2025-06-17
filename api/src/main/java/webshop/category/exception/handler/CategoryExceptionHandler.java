@@ -21,7 +21,7 @@ public class CategoryExceptionHandler {
     @ExceptionHandler(DuplicateCategoryException.class)
     public ResponseEntity<Map<String, String>> handleDuplicateCategoryException(DuplicateCategoryException ex) {
         return ResponseEntity.badRequest()
-                .body(Map.of("error", ex.getMessage()));
+                .body(Map.of("name", ex.getMessage()));
     }
 
 }
