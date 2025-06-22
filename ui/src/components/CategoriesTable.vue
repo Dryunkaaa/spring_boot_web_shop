@@ -156,48 +156,50 @@ function updateErrorsDuringSave(errors) {
 
   <button @click="newCategory = {}">Create</button>
 
-  <Modal :show="Boolean(selectedCategory || newCategory)"
-         @closeModal="selectedCategory = null; newCategory = null; errorsDuringSave = {}">
-    <template #header>
-      <h1 v-if="selectedCategory">Category: '{{ originalCategoryName }}'</h1>
-      <h1 v-else>New category</h1>
-    </template>
+  <Teleport to="body">
+    <Modal :show="Boolean(selectedCategory || newCategory)"
+           @closeModal="selectedCategory = null; newCategory = null; errorsDuringSave = {}">
+      <template #header>
+        <h1 v-if="selectedCategory">Category: '{{ originalCategoryName }}'</h1>
+        <h1 v-else>New category</h1>
+      </template>
 
-    <div style="display: flex; flex-direction: column; gap: 10px; flex-grow: 1" @keydown.enter="saveEditedCategory">
-      <div>
-        <label for="categoryName" class="form-label">Name:</label>
-        <input id="categoryName" v-if="selectedCategory" v-model="selectedCategory.name" class="form-control"
-               :disabled="isSaving">
-        <input id="categoryName" v-else v-model="newCategory.name" class="form-control" :disabled="isSaving">
+      <div style="display: flex; flex-direction: column; gap: 10px; flex-grow: 1" @keydown.enter="saveEditedCategory">
+        <div>
+          <label for="categoryName" class="form-label">Name:</label>
+          <input id="categoryName" v-if="selectedCategory" v-model="selectedCategory.name" class="form-control"
+                 :disabled="isSaving">
+          <input id="categoryName" v-else v-model="newCategory.name" class="form-control" :disabled="isSaving">
 
-        <div style="color: red" v-if="categoryNameError">
-          {{ categoryNameError }}
+          <div style="color: red" v-if="categoryNameError">
+            {{ categoryNameError }}
+          </div>
+        </div>
+
+        <div v-show="possibleParentCategories.length">
+          <label for="parentCategory" class="form-label">Parent category:</label>
+          <select id="parentCategory" class="form-control" v-if="selectedCategory" v-model="selectedCategory.parentId"
+                  :disabled="isSaving">
+            <option :value="null">---</option>
+            <option v-for="category in possibleParentCategories" :value="category.id">
+              {{ category.name }}
+            </option>
+          </select>
+
+          <select id="parentCategory" class="form-control" v-else v-model="newCategory.parentId" :disabled="isSaving">
+            <option :value="undefined">---</option>
+            <option v-for="category in possibleParentCategories" :value="category.id" :key="category.id">
+              {{ category.name }}
+            </option>
+          </select>
         </div>
       </div>
 
-      <div v-show="possibleParentCategories.length">
-        <label for="parentCategory" class="form-label">Parent category:</label>
-        <select id="parentCategory" class="form-control" v-if="selectedCategory" v-model="selectedCategory.parentId"
-                :disabled="isSaving">
-          <option :value="null">---</option>
-          <option v-for="category in possibleParentCategories" :value="category.id">
-            {{ category.name }}
-          </option>
-        </select>
-
-        <select id="parentCategory" class="form-control" v-else v-model="newCategory.parentId" :disabled="isSaving">
-          <option :value="undefined">---</option>
-          <option v-for="category in possibleParentCategories" :value="category.id" :key="category.id">
-            {{ category.name }}
-          </option>
-        </select>
-      </div>
-    </div>
-
-    <template #footer>
-      <button @click="saveEditedCategory" :disabled="isSaving">{{ selectedCategory ? 'Save' : 'Create' }}</button>
-    </template>
-  </Modal>
+      <template #footer>
+        <button @click="saveEditedCategory" :disabled="isSaving">{{ selectedCategory ? 'Save' : 'Create' }}</button>
+      </template>
+    </Modal>
+  </Teleport>
 </template>
 
 <style scoped>

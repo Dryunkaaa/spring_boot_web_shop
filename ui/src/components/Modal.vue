@@ -1,11 +1,9 @@
 <script setup>
-import {useSlots, onMounted, onUnmounted} from "vue";
+import {onMounted, onUnmounted} from "vue";
 
 defineProps({
   show: Boolean
 })
-
-const slots = useSlots();
 
 const emit = defineEmits(['closeModal']);
 
@@ -31,13 +29,13 @@ onUnmounted(() => {
   <div class="modal-backdrop" v-if="show" @click="close"></div>
   <div class="modal" v-if="show">
     <div class="modal-content">
-      <div class="modal-header" v-if="slots.header">
+      <div class="modal-header" v-if="$slots.header">
         <slot name="header" />
       </div>
       <div class="modal-body">
         <slot />
       </div>
-      <div class="modal-footer" v-if="slots.footer">
+      <div class="modal-footer" v-if="$slots.footer">
         <slot name="footer" />
       </div>
     </div>
