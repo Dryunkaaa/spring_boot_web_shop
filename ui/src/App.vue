@@ -1,9 +1,5 @@
-<script setup>
-import CategoriesTable from './components/CategoriesTable.vue'
-</script>
-
 <template>
-  <CategoriesTable />
+  <router-view></router-view>
 </template>
 
 

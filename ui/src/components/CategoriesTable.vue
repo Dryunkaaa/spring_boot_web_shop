@@ -154,7 +154,7 @@ function updateErrorsDuringSave(errors) {
   </table>
   <p v-else>No categories found! Please create first</p>
 
-  <button @click="newCategory = {}">Create</button>
+  <button @click="newCategory = {}" :style="{width: '50%', height: '30px'}">Create</button>
 
   <Teleport to="body">
     <Modal :show="Boolean(selectedCategory || newCategory)"
@@ -203,6 +203,16 @@ function updateErrorsDuringSave(errors) {
 </template>
 
 <style scoped>
+table {
+  width: 80%;
+  color: white;
+}
+
+th {
+  text-align: left;
+  color: darkgrey;
+}
+
 input, select {
   width: 100%;
 }
