@@ -158,7 +158,7 @@ function updateErrorsDuringSave(errors) {
 
   <Teleport to="body">
     <Modal :show="Boolean(selectedCategory || newCategory)"
-           @closeModal="selectedCategory = null; newCategory = null; errorsDuringSave = {}">
+           @closeModal="selectedCategory = null; newCategory = null; updateErrorsDuringSave({})">
       <template #header>
         <h1 v-if="selectedCategory">Category: '{{ originalCategoryName }}'</h1>
         <h1 v-else>New category</h1>
