@@ -3,14 +3,15 @@ package webshop.category.service.impl;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
 import webshop.category.dto.CategoryDTO;
 import webshop.category.entity.Category;
 import webshop.category.exception.CategoryNotFoundException;
+import webshop.category.exception.CircularDependencyException;
 import webshop.category.exception.DuplicateCategoryException;
 import webshop.category.repository.CategoryRepository;
 import webshop.category.request.SaveCategoryRequest;
 import webshop.category.service.CategoryService;
-import org.springframework.stereotype.Service;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -61,7 +62,7 @@ public class CategoryServiceImpl implements CategoryService {
             }
 
             if (parentCategory.getParentCategory() != null && parentCategory.getParentCategory().getId().equals(category.getId())) {
-                throw new IllegalArgumentException("Circular dependency: a category cannot be a parent of its parent");
+                throw new CircularDependencyException("Category cannot be a parent of its parent");
             }
         }
 

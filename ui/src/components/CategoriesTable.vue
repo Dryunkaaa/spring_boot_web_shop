@@ -22,6 +22,10 @@ const categoryNameError = computed(() => {
   return errorsDuringSave.name;
 });
 
+const categoryParentError = computed(() => {
+  return errorsDuringSave.parentId;
+});
+
 const possibleParentCategories = computed(() => {
   if (selectedCategory.value) {
     return categories.filter(c => c.id !== selectedCategory.value.id);
@@ -192,6 +196,10 @@ function updateErrorsDuringSave(errors) {
               {{ category.name }}
             </option>
           </select>
+
+          <div style="color: red" v-if="categoryParentError">
+            {{ categoryParentError }}
+          </div>
         </div>
       </div>
 
